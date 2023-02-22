@@ -84,8 +84,6 @@ ssize_t get_input(info_t *info)
 		*buf_p = p;/* pass back pointer to current command ppostion*/
 		return (_strlen(p));
 	}
-
-	*buf_p == buf;
 	return (r);
 }
 /**
