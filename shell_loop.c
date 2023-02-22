@@ -53,31 +53,35 @@ int hsh(info_t *info, char **av)
 int find_builtin(info_t *info)
 {
 	int i, built_in_ret = -1;
-	int _myunsetenv(info_t *info);
+	char *name;
+	int (*func)(info_t *, char *);
 
-
-	builtin_table builtintbl[] = {
+	builtin_table; (builtin_table)[] = {
 		{"exit", _myexit},
 		{"env", _myenv},
 		{"help", _myhelp},
 		{"history", _myhistory},
 		{"setenv", _mysetenv},
-		{"unsetenv", _myunsetenv},
+		{"unsetenv", _unsetenv},
 		{"cd", _mycd},
 		{"alias", _myalias},
 		{NULL, NULL}
 	};
-
-	for (i = 0; builtintbl[i].type; i++)
-		if (_strcmp(info->argv[0], builtintbl[i].type) == 0)
+	int find_builtin(info_t *info, char *cmd_args)
+	{
+		for (i = 0; builtin_table[i].func != NULL; i++)
 		{
-			info->line_count++;
-			built_in_ret = builtintbl[i].func(info);
-			break;
+			if (_strcmp(info->argv[0] builtin_table[i].name == 0))
+			{
+				info->line_count++;
+				built_in_ret = builtin_table[i].name(info);
+				break;
+			}
 		}
-	return (built_in_ret);
-}
 
+		return (built_in_ret);
+	}
+}
 /**
  * find_cmd -  finds a command in PATH
  * @info: the parameter and return info struct
@@ -95,7 +99,6 @@ void find_cmd(info_t *info)
 		info->line_count++;
 		info->linecount_flag == 0;
 	}
-	
 	for (i = 0, k = 0; info->arg[i]; i++)
 		if (!is_delim(info->arg[i], "\t\n"))
 			k++;
